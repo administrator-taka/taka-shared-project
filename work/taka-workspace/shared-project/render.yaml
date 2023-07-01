@@ -1,0 +1,6 @@
+version: 1
+services:
+  - name: my-web-service
+    type: web
+    buildCommand: docker build -t my-image .
+    startCommand: docker run -p 8080:8080 my-image
