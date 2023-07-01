@@ -1,6 +1,0 @@
-version: 1
-services:
-  - name: java
-    type: web
-    buildCommand: docker build -t mywebapp .
-    startCommand: docker run -p 8080:8080 mywebapp
