@@ -1,13 +1,17 @@
 参考資料
 https://qiita.com/A-Kira/items/beaf79a0d39d9839e61e
 
-shared-project/docker配下で  
-cd ../../docker
+shared-project配下で
 
 ```
 docker compose down
 docker compose build
 docker compose up -d
+
+```
+
+TODO: 変更を反映させる場合
+```
 docker-compose exec java bash
 
 ```
