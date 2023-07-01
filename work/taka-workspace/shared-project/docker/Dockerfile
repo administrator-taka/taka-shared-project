@@ -11,7 +11,7 @@ COPY ../spring-project /srv/spring-project
 WORKDIR /srv/spring-project/mywebapp
 
 # 依存関係のインストールやビルドなど、必要なコマンドを実行します
-RUN ./gradlew build
+RUN chmod +x ./gradlew && ./gradlew build
 
 # コンテナの起動時に実行されるコマンドを指定します
 CMD java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar
