@@ -22,5 +22,4 @@ java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar
 ```
 
 http://localhost:8080/
-
-にアクセスしてHelloWorldと表示されればOK
+がルート
