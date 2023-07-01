@@ -5,6 +5,7 @@ shared-project/docker配下で
 cd ../../docker
 
 ```
+docker compose down
 docker compose build
 docker compose up -d
 docker-compose exec java bash
