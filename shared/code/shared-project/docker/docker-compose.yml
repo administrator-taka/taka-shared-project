@@ -5,5 +5,5 @@ services:
       - 8080:8080
     tty: true
     volumes:
-      - ../spring-project/api:/srv:cached
+      - ../spring-project:/srv:cached
     working_dir: /srv
