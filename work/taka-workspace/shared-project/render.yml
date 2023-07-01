@@ -1,0 +1,19 @@
+version: 1
+services:
+  java:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8080:8080
+    routes:
+      - src: /
+        dest: 8080
+    concurrency:
+      hardLimit: 1
+    environment:
+      # 環境変数の設定
+    volumes:
+      - type: bind
+        source: ./spring-project
+        destination: /srv/spring-project
