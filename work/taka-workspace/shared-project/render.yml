@@ -11,8 +11,6 @@ services:
         dest: 8080
     concurrency:
       hardLimit: 1
-    environment:
-      # 環境変数の設定
     volumes:
       - type: bind
         source: ./spring-project
