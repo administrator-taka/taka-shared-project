@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @SpringBootApplication
 public class DemoApplication {
-	@RequestMapping("/")
-	public String home() {
-		return "Hello World";
-	}
+
+  @RequestMapping("/")
+  public String home() {
+    return "Hello World テスト用出力";
+  }
 
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(DemoApplication.class, args);
+  }
 
 }
