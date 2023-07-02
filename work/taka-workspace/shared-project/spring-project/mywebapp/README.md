@@ -1,12 +1,18 @@
 参考資料
 https://qiita.com/A-Kira/items/beaf79a0d39d9839e61e
 
-shared-project/docker配下で  
-cd ../../docker
+dev環境用
 
 ```
 docker compose down
-docker compose build
+docker-compose -f docker-compose.dev.yml up -d --build
+
+```
+
+shared-project配下で
+
+```
+docker compose down
 docker compose up -d
 docker-compose exec java bash
 
@@ -18,6 +24,14 @@ docker-compose exec java bash
 cd mywebapp
 ./gradlew build
 java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar
+
+```
+
+これは必要なのかわからない
+
+```
+docker rmi shared-project-java
+docker compose build
 
 ```
 
