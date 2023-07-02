@@ -1,0 +1,13 @@
+version: '3'
+services:
+  java:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8080:8080
+    tty: true
+    container_name: java-container
+    volumes:
+      - ./spring-project:/srv/spring-project:cached
+    working_dir: /srv/spring-project/mywebapp
