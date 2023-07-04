@@ -9,16 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-@RestController
 
 @SpringBootApplication
 public class MywebappApplication {
-	@RequestMapping("/")
-	public String home() {
-		return "Hello World";
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(MywebappApplication.class, args);
-	}
+
+  public static void main(String[] args) {
+    SpringApplication.run(MywebappApplication.class, args);
+  }
 
 }
