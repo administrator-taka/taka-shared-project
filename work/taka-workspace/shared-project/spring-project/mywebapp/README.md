@@ -38,3 +38,12 @@ docker compose build
 
 http://localhost:8080/
 がルート
+
+
+ローカル用JDKインストール
+https://corretto.aws/downloads/latest/amazon-corretto-17-x64-windows-jdk.msi
+ここからAmazon Corretto 17のインストール
+
+ファイル/プロジェクト構造/SDK/プラスボタンを押してC:\Program Files\Amazon Corretto\jdk17.0.8_7を選択して追加
+プロジェクト/で17を選択し，corretto-17を選択するだったと思う．
+mywebapp\src\main\java\com\example\mywebapp\MywebappApplication.javaを右クリックし実行
