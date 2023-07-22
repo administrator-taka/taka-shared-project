@@ -4,7 +4,7 @@ services:
     # 一旦docker-compose.ymlに書くためコメントアウト
     # build: ./docker/api
     # OpenJDKでもAmazon Correttoでもどっちでも
-    image: amazoncorretto:17
+    image: amazoncorretto:11
     ports:
       - 8080:8080
     tty: true

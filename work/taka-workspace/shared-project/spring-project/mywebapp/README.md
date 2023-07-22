@@ -23,7 +23,7 @@ docker-compose exec java bash
 
 ```
 cd mywebapp
-./gradlew build
+./gradlew build -x test
 java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar
 
 ```
@@ -38,7 +38,6 @@ docker compose build
 
 http://localhost:8080/
 がルート
-
 
 ローカル用JDKインストール
 https://corretto.aws/downloads/latest/amazon-corretto-17-x64-windows-jdk.msi

@@ -1,5 +1,7 @@
 package com.example.mywebapp.presentation.controller;
 
+import com.example.mywebapp.application.service.TestService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
+@RequiredArgsConstructor
 public class TestController {
+
+  private final TestService testService;
 
   @RequestMapping("/")
   public String home() {
@@ -20,6 +25,13 @@ public class TestController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> test(@RequestBody String str) {
     System.out.println("test");
+    return ResponseEntity.status(HttpStatus.OK).body(str);
+  }
+
+  @PostMapping(path = "/db", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> testDb(@RequestBody String str) {
+    System.out.println("test");
+    testService.test(str);
     return ResponseEntity.status(HttpStatus.OK).body(str);
   }
 }
