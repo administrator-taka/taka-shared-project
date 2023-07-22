@@ -25,14 +25,8 @@ public class TestController {
     return "Hello World";
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> test(@RequestBody String str) {
-    System.out.println("test");
-    return ResponseEntity.status(HttpStatus.OK).body(str);
-  }
-
   @PostMapping(path = "/db", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> testDb(@RequestBody TestRequest request) {
+  public ResponseEntity<?> test(@RequestBody TestRequest request) {
     TestDto dto = testService.test(request.getTest());
     TestResponse response = new TestResponse();
     response.setId(dto.getId());
