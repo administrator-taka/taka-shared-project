@@ -1,6 +1,10 @@
 services:
-  java:
-    image: openjdk:17-slim
+  api:
+    container_name: api
+    # 一旦docker-compose.ymlに書くためコメントアウト
+    # build: ./docker/api
+    # OpenJDKでもAmazon Correttoでもどっちでも
+    image: amazoncorretto:17
     ports:
       - 8080:8080
     tty: true
