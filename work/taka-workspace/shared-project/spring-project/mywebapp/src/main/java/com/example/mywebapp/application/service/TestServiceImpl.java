@@ -1,6 +1,8 @@
 package com.example.mywebapp.application.service;
 
+import com.example.mywebapp.application.dto.TestDto;
 import com.example.mywebapp.infrastructure.logic.TestLogic;
+import com.example.mywebapp.infrastructure.model.TestModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +15,12 @@ public class TestServiceImpl implements TestService {
   private final TestLogic testLogic;
 
   @Override
-  public void test(String name) {
-    System.out.println("name:" + name);
-    testLogic.test(name);
+  public TestDto test(String name) {
+    TestModel model = testLogic.test(name);
+    TestDto dto = new TestDto();
+    dto.setId(model.getId());
+    dto.setName(model.getName());
+    dto.setPassword(model.getPassword());
+    return dto;
   }
 }

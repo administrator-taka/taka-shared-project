@@ -1,6 +1,8 @@
 package com.example.mywebapp.application.service;
 
+import com.example.mywebapp.application.dto.TestDto;
+
 public interface TestService {
 
-  void test(String name);
+  TestDto test(String name);
 }

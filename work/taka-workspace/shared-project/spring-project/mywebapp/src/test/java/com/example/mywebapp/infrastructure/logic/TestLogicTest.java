@@ -1,6 +1,7 @@
 package com.example.mywebapp.infrastructure.logic;
 
 import com.example.mywebapp.domain.mapper.TestMapper;
+import com.example.mywebapp.infrastructure.model.TestModel;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,8 @@ class TestLogicTest {
   @Test
   @Sql("/sql/test.sql")
   public void test() {
-    System.out.println("通った");
     TestLogic testLogic = new TestLogic(testMapper);
-    testLogic.test("testA");
+    TestModel model = testLogic.test("testA");
+    System.out.println(model);
   }
 }

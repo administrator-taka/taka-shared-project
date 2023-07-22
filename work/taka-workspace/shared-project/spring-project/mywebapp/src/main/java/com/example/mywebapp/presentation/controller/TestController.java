@@ -1,7 +1,9 @@
 package com.example.mywebapp.presentation.controller;
 
+import com.example.mywebapp.application.dto.TestDto;
 import com.example.mywebapp.application.service.TestService;
 import com.example.mywebapp.presentation.request.TestRequest;
+import com.example.mywebapp.presentation.response.TestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,8 +33,11 @@ public class TestController {
 
   @PostMapping(path = "/db", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> testDb(@RequestBody TestRequest request) {
-    System.out.println("リクエスト出力:" + request);
-    testService.test(request.getTest());
-    return ResponseEntity.status(HttpStatus.OK).body(request);
+    TestDto dto = testService.test(request.getTest());
+    TestResponse response = new TestResponse();
+    response.setId(dto.getId());
+    response.setName(dto.getName());
+    response.setPassword(dto.getPassword());
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 }
