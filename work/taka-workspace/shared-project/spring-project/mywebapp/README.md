@@ -15,7 +15,7 @@ shared-project配下で
 ```
 docker compose down
 docker compose up -d
-docker-compose exec java bash
+docker-compose exec api bash
 
 ```
 
