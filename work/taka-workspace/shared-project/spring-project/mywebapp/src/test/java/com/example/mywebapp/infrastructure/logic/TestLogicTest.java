@@ -28,7 +28,7 @@ class TestLogicTest {
   @Sql("/sql/test.sql")
   public void test() {
     TestLogic testLogic = new TestLogic(testMapper);
-    TestModel model = testLogic.test("testA");
+    TestModel model = testLogic.test("test_name_a");
     System.out.println(model);
   }
 }

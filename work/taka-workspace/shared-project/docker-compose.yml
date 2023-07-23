@@ -25,6 +25,8 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+      # 初期データ投入用
+      - ./docker/db/scripts:/docker-entrypoint-initdb.d
+      - ./docker/db/sql:/sql
 volumes:
   postgres_data:

@@ -5,7 +5,7 @@ CREATE TABLE test (
     password VARCHAR(50)
 );
 INSERT INTO test (id, name, password) VALUES
-    ('1', 'testA', 'test1'),
-    ('2', 'testB', 'test2'),
-    ('3', 'testC', 'test3');
-select * from test;
+    ('1', 'test_name_a', 'test_password_a'),
+    ('2', 'test_name_b', 'test_password_b'),
+    ('3', 'test_name_c', 'test_password_c');
+-- select * from test;
