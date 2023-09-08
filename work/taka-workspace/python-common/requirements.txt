@@ -1,0 +1,4 @@
+Django
+python-decouple
+python-dotenv
+yt-dlp
