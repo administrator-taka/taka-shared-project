@@ -11,6 +11,15 @@ services:
     volumes:
       - ./spring-project:/srv:cached
     working_dir: /srv
+  view:
+    container_name: view
+    build: ./docker/view
+    ports:
+      - 9000:8080
+    tty: true
+    volumes:
+      - ./view-project:/app:cached
+    working_dir: /app/my-vue-app
   db:
     container_name: postgresql
     image: postgres:13.4

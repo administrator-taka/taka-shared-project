@@ -1,4 +1,4 @@
 cd ../../
 docker compose down
-docker compose up -d
-cmd /k
+docker compose up -d --build
+@REM cmd /k
