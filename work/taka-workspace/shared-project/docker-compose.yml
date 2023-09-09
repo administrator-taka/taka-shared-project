@@ -18,7 +18,7 @@ services:
       - 9000:8080
     tty: true
     volumes:
-      - ./view-project:/app:cached
+      - ./vue-project:/app:cached
     working_dir: /app/my-vue-app
   db:
     container_name: postgresql
