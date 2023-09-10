@@ -1,8 +1,9 @@
 <template>
   <div>
-    <h1>TOP</h1>
-    <!-- SidebarComponent.vue コンポーネントを使用 -->
     <Sidebar />
+    <main>
+      <div>トップ画面</div>
+    </main>
   </div>
 </template>
 
