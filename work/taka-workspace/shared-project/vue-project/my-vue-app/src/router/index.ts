@@ -3,7 +3,7 @@ import YoutubeHome from '@/components/youtube-service/YoutubeHome.vue'
 import TopComponent from '@/components/TopComponent.vue'
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/top',
     name: 'TopComponent',
     component: TopComponent
   },    {
