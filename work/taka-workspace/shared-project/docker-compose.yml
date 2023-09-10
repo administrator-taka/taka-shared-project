@@ -14,7 +14,7 @@ services:
   view:
     container_name: view
     build: ./docker/view
-    command: /bin/sh -c "if [ ! -e node_modules ]; then npm install --check-files; fi && yarn serve"
+    command: /bin/sh -c "if [ ! -e node_modules ]; then npm install --check-files; fi && npm run serve"
     ports:
       - 9000:8080
     tty: true
