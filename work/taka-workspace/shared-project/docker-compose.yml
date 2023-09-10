@@ -14,6 +14,7 @@ services:
   view:
     container_name: view
     build: ./docker/view
+    command: /bin/sh -c "if [ ! -e node_modules ]; then npm install --check-files; fi && yarn serve"
     ports:
       - 9000:8080
     tty: true
@@ -28,7 +29,7 @@ services:
     ports:
       - 5432:5432
     environment:
-    # TODO:環境変数から取得するように修正
+      # TODO:環境変数から取得するように修正
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

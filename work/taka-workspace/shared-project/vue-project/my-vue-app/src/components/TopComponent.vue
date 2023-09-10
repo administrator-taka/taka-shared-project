@@ -1,8 +1,8 @@
 <template>
   <div>
     <Sidebar />
-    <main>
-      <div>トップ画面</div>
+    <main class="main-content">
+      <div>トップ画面（仮）</div>
     </main>
   </div>
 </template>
@@ -17,6 +17,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* 必要なスタイルを追加 */
-</style>
+<style scoped></style>
