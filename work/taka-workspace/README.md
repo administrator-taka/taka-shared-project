@@ -3,5 +3,5 @@
 Vue,Node.js,Vue-cli,nvm,npm,yarn
 vue,typescript,scssの違い
 
-router:パスの制御
+vue-router:パスの制御
 composition-api:コンポーネントの再利用？
