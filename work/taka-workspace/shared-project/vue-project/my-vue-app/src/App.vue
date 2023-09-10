@@ -1,6 +1,7 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <button type="button" class="btn btn-primary">Bootstrap</button>
 </template>
 
 <script>
