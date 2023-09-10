@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Sidebar from "./SidebarComponent.vue"; // SidebarComponent.vue をインポート
+import Sidebar from "@/components/SidebarComponent.vue"; // SidebarComponent.vue をインポート
 
 export default {
   components: {
