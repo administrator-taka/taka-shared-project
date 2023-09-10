@@ -1,15 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './components/youtube-service/YoutubeHome.vue'
+import YoutubeHome from './components/youtube-service/YoutubeHome.vue'
+import TopComponent from './components/TopComponent.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/test',
-      name: 'home',
-      component: Home
+      path: '/',
+      name: 'TopComponent',
+      component: TopComponent
+    },    {
+      path: '/youtubeHome',
+      name: 'YoutubeHome',
+      component: YoutubeHome
     },
-    // 他のルートをここに追加できます
   ]
 })
 
