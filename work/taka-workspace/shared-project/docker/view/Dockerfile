@@ -9,6 +9,3 @@ RUN apk update && \
     npm install -g npm@9.6.7 && \
     npm install -g @vue/cli@5.0.8 && \
     npm install -g serve
-
-# コンテナ内でアプリケーションを実行
-CMD ["npm", "run", "serve"]
