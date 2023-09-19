@@ -1,0 +1,65 @@
+databases:
+  - name: postgresql
+    databaseName: postgres
+    user: postgres
+    plan: starter
+    region: singapore
+    postgresMajorVersion: 13
+
+services:
+  - type: web
+    name: api
+    env: java
+    plan: starter
+    region: singapore
+    buildCommand: "./mywebapp/gradlew build -x test" # ビルドコマンドを修正
+    startCommand: "java -jar /mywebapp/app/build/libs/mywebapp-0.0.1-SNAPSHOT.jar" # 起動コマンドを修正
+    envVars:
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: postgresql
+          property: databaseName
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: postgresql
+          property: username
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: postgresql
+          property: password
+    ports:
+      - 8080:8080
+    tty: true
+    volumes:
+      - ./mywebapp:/mywebapp:cached # マウントポイントを修正
+    workingDir: /mywebapp # ワーキングディレクトリを修正
+
+  - type: web
+    name: view
+    env: node
+    plan: starter
+    region: singapore
+    buildCommand: # ビルドコマンドを記述する必要があれば追加
+    startCommand: "npm run serve" # 実際の起動コマンドに置き換えてください
+    envVars:
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: postgresql
+          property: databaseName
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: postgresql
+          property: username
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: postgresql
+          property: password
+    ports:
+      - 9000:8080
+    tty: true
+    volumes:
+      - ./vue-project:/app:cached
+    workingDir: /app/my-vue-app
+
+volumes:
+  postgres_data:
