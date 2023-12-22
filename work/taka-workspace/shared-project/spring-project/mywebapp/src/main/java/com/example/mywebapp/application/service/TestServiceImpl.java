@@ -1,8 +1,8 @@
 package com.example.mywebapp.application.service;
 
 import com.example.mywebapp.application.dto.TestDto;
-import com.example.mywebapp.infrastructure.logic.TestLogic;
-import com.example.mywebapp.infrastructure.model.TestModel;
+import com.example.mywebapp.domain.logic.TestLogic;
+import com.example.mywebapp.domain.model.TestModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

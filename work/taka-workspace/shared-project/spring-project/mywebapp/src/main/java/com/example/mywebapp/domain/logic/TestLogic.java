@@ -1,8 +1,8 @@
-package com.example.mywebapp.infrastructure.logic;
+package com.example.mywebapp.domain.logic;
 
-import com.example.mywebapp.domain.entity.TestEntity;
-import com.example.mywebapp.domain.mapper.TestMapper;
-import com.example.mywebapp.infrastructure.model.TestModel;
+import com.example.mywebapp.domain.model.TestModel;
+import com.example.mywebapp.infrastructure.entity.TestEntity;
+import com.example.mywebapp.infrastructure.mapper.TestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

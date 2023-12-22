@@ -1,12 +1,11 @@
-package com.example.mywebapp.infrastructure.model;
+package com.example.mywebapp.infrastructure.entity;
 
 import lombok.Data;
 
 @Data
-public class TestModel {
+public class TestEntity {
 
   private String id;
   private String name;
   private String password;
-
 }

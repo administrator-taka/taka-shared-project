@@ -1,6 +1,6 @@
-package com.example.mywebapp.domain.mapper;
+package com.example.mywebapp.infrastructure.mapper;
 
-import com.example.mywebapp.domain.entity.TestEntity;
+import com.example.mywebapp.infrastructure.entity.TestEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
