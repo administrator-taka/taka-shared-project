@@ -5,9 +5,9 @@
       <div class="position-sticky">
         <ul class="nav flex-column">
           <li v-for="link in sidebarLinks" :key="link.name" class="nav-item">
-            <router-link :to="{ name: link.routeName }" class="nav-link">{{
-              link.name
-            }}</router-link>
+            <router-link :to="{ name: link.routeName }" class="nav-link"
+              >{{ link.name }}
+            </router-link>
           </li>
         </ul>
       </div>

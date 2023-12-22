@@ -1,3 +1,3 @@
-export interface testRequest{
-    test:string
+export interface testRequest {
+  test: string;
 }

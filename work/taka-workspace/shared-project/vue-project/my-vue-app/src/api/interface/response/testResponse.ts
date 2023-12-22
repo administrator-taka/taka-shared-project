@@ -1,5 +1,5 @@
-export interface testResponse{
-    id: string
-    name: string
-    password: string
+export interface testResponse {
+  id: string;
+  name: string;
+  password: string;
 }
