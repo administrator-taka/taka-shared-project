@@ -16,10 +16,12 @@ export default {
   },
   setup(){
     const test=async ()=>{
-      testRepository.testApi({'test':'test_name_a'}).then((res)=>{
+      testRepository.testApi(
+          {'test':'test_name_a'}).then((res)=>{
 
         console.log("★★★api疎通確認★★★")
-        console.log(res)
+        console.log(res
+        )
       }).catch((error)=>{
         console.log("★★★エラー動作確認★★★")
         console.log(error)
