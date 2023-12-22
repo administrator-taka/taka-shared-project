@@ -24,8 +24,14 @@ docker-compose exec api bash
 ```
 cd mywebapp
 ./gradlew build -x test
-java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar
+java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar --spring.profiles.active=develop
 
+```
+
+localでは実行の構成で環境変数を設定し実行
+
+```
+SPRING_PROFILES_ACTIVE=local
 ```
 
 これは必要なのかわからない
@@ -39,7 +45,7 @@ docker compose build
 http://localhost:8080/
 がルート
 
-ローカル用JDKインストール
+ローカル用JDKインストール（たぶんIntellijだとそのままインストールできるから不要)
 以下のサイト
 (https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-11-ug/downloads-list.html)
 https://corretto.aws/downloads/latest/amazon-corretto-11-x64-windows-jdk.msi
