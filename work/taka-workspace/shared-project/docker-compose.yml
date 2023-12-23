@@ -5,12 +5,13 @@ services:
     # build: ./docker/api
     # OpenJDKでもAmazon Correttoでもどっちでも
     image: amazoncorretto:11
+    command: /bin/sh -c "./gradlew build -x test && java -jar build/libs/mywebapp-0.0.1-SNAPSHOT.jar --spring.profiles.active=develop"
     ports:
       - 8080:8080
     tty: true
     volumes:
       - ./spring-project:/srv:cached
-    working_dir: /srv
+    working_dir: /srv/mywebapp
   view:
     container_name: view
     build: ./docker/view
