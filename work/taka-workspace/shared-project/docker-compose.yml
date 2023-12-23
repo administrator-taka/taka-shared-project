@@ -15,7 +15,7 @@ services:
   view:
     container_name: view
     build: ./docker/view
-    command: /bin/sh -c "if [ ! -e node_modules ]; then npm install --check-files; fi && npm run serve"
+    command: /bin/sh -c "if [ ! -e node_modules ]; then npm install --check-files; fi && npm run serve-develop"
     ports:
       - 3000:3000
     tty: true
