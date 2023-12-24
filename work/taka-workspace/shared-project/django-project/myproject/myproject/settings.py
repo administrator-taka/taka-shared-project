@@ -80,8 +80,8 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         # TODO:環境変数から取得するように修正、その他も同様
-        'HOST': 'db',  # Docker 内の PostgreSQL サービスの名前
-        # 'HOST': 'localhost',
+        # 'HOST': 'db',  # Docker 内の PostgreSQL サービスの名前
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
