@@ -39,5 +39,17 @@ services:
       # 初期データ投入用
       - ./docker/db/scripts:/docker-entrypoint-initdb.d
       - ./docker/db/sql:/sql
+  django:
+    container_name: django_app
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./django-project/myproject:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
 volumes:
   postgres_data:
