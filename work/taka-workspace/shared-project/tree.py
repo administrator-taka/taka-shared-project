@@ -2,17 +2,17 @@ import os
 import subprocess
 
 
-def find_git_repo_path(current_path):
-    while True:
-        git_dir = os.path.join(current_path, '.git')
-        if os.path.exists(git_dir) and os.path.isdir(git_dir):
-            return current_path
-        # 親ディレクトリに移動
-        current_path = os.path.dirname(current_path)
-        if current_path == os.path.dirname(current_path):
-            break  # ルートディレクトリに達した場合は終了
+# def find_git_repo_path(current_path):
+#     while True:
+#         git_dir = os.path.join(current_path, '.git')
+#         if os.path.exists(git_dir) and os.path.isdir(git_dir):
+#             return current_path
+#         # 親ディレクトリに移動
+#         current_path = os.path.dirname(current_path)
+#         if current_path == os.path.dirname(current_path):
+#             break  # ルートディレクトリに達した場合は終了
 
-    return None  # Gitリポジトリが見つからなかった場合
+#     return None  # Gitリポジトリが見つからなかった場合
 
 
 def generate_git_tree(repo_path, output_file, max_depth=3):
@@ -51,7 +51,7 @@ def generate_git_tree(repo_path, output_file, max_depth=3):
 
 if __name__ == "__main__":
     current_path = os.getcwd()  # 現在のディレクトリを取得
-    repo_path = find_git_repo_path(current_path)
+    # repo_path = find_git_repo_path(current_path)
     search_path = current_path
 
     # なんかgitリポジトリなくてもいけるっぽい？
