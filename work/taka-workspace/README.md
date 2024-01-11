@@ -1,5 +1,6 @@
 # taka-workspace
 
+```
 ├─README.md
 ├─python-common
 │ ├─.gitignore
@@ -166,3 +167,4 @@
 ├─tsconfig.json
 ├─vue.config.js
 └─yarn.lock
+```
