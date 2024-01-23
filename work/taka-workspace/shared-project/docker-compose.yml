@@ -44,7 +44,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/django/Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver --settings=myproject.settings.development 0.0.0.0:8000
     volumes:
       - ./django-project/myproject:/app
     ports:
