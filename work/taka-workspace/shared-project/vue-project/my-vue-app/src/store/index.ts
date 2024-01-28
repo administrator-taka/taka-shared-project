@@ -1,12 +1,13 @@
-// src/store/index.ts
+// ./store/index.ts
 
 import { createStore } from "vuex";
+import testModule from "./test";
 
 const store = createStore({
-  state: { /* ... */ },
-  getters: { /* ... */ },
-  mutations: { /* ... */ },
-  actions: { /* ... */ }
+  modules: {
+    test: testModule,
+    // 他のモジュールがあればここに追加
+  },
 });
 
 export default store;

@@ -5,21 +5,25 @@
       <div>youtube home（仮）</div>
       <div>↓Java API疎通確認</div>
       <div>{{ result }}</div>
+      <button @click="testVuex">Trigger Vuex</button>
     </main>
   </div>
 </template>
 
 <script>
-import Sidebar from "@/components/SidebarComponent.vue"; // SidebarComponent.vue をインポート
+import Sidebar from "@/components/SidebarComponent.vue";
 import testRepository from "@/api/sampleName/testRepository";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 
 export default {
   components: {
-    Sidebar, // コンポーネントを登録
+    Sidebar,
   },
   setup() {
     const result = ref();
+    const store = useStore();
+
     const test = async () => {
       testRepository
         .testApi({ test: "test_name_a" })
@@ -33,8 +37,21 @@ export default {
           console.log(error);
         });
     };
-    test();
-    return { result };
+
+    const testVuex = async () => {
+      await store.dispatch("test/setUserDataAction", {
+        username: "example",
+        email: "example@example.com",
+      });
+      const userData = await store.dispatch("test/getUserData");
+      console.log("Fetched User Data:", userData);
+    };
+
+    onMounted(() => {
+      test();
+    });
+
+    return { result, testVuex };
   },
 };
 </script>
