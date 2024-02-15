@@ -6,8 +6,7 @@ async def convert_html_to_pdf(html_file_path, output_pdf_path):
     browser = await launch(headless=True)
     page = await browser.newPage()
     await page.goto(f'file://{os.path.abspath(html_file_path)}', waitUntil='networkidle0')
-    # フォントの設定
-    await page.pdf({'path': output_pdf_path, 'format': 'A4', 'fontOptions': {'defaultEncoding': 'utf-8'}})
+    await page.pdf({'path': output_pdf_path, 'format': 'A4'})
     await browser.close()
     print(f"Converted {html_file_path} to PDF")
 
