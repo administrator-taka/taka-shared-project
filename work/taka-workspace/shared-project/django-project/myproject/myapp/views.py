@@ -6,10 +6,15 @@ from rest_framework.response import Response
 def my_view(request):
     data = request.data
     print(data)
-    # データベースから値を取得する処理を実装する
-    return Response("Response from API")
 
+    # Test モデルのすべてのレコードをシリアライザを使ってシリアライズして出力する
+    tests = Test.objects.all()
+    serializer = TestSerializer(tests, many=True)
+    print(serializer.data)
 
+    return Response(serializer.data)
+
+# ここから下は保留
 from rest_framework.viewsets import ModelViewSet
 from .models import Test
 from .serializer import TestSerializer
