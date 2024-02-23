@@ -1,6 +1,9 @@
 from django.db import models
 
-class Test(models.Model):
-    id = models.CharField(primary_key=True, max_length=50)
-    name = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
+
+class MyModel(models.Model):
+    field1 = models.CharField(max_length=100)
+    field2 = models.TextField()
+
+    def __str__(self):
+        return self.field1

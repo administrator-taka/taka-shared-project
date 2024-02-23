@@ -1,8 +1,15 @@
-# coding: utf-8
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
-from rest_framework import routers
-# from myapp.view.views import UserViewSet
+from .views import MyModelViewSet
 
-router = routers.DefaultRouter()
-# router.register(r'users', UserViewSet)
-# router.register(r'entries', EntryViewSet)
+# デフォルトのルーターを作成
+router = DefaultRouter()
+
+# MyModelViewSetをルーターに登録
+router.register(r'models', MyModelViewSet)
+
+# APIのルートURLを設定
+urlpatterns = [
+    path('', include(router.urls)),
+]

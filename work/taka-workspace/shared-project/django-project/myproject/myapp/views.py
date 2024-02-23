@@ -1,18 +1,20 @@
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from myapp.models import Test  # TestSerializer を myapp.models からインポートする
-from myapp.serializer import TestSerializer  # ここを修正
 
-class TestAPIView(APIView):
-    def post(self, request):
-        # POSTリクエストからデータを受け取ります
-        data = request.data
 
-        # 受け取ったデータを使ってデータベースから値を取得します
-        test_object = Test.objects.filter(id=data.get('id')).first()
+@api_view(['POST'])
+def my_view(request):
+    data = request.data
+    print(data)
+    # データベースから値を取得する処理を実装する
+    return Response("Response from API")
 
-        # データベースから取得した値をシリアライズします
-        serializer = TestSerializer(test_object)
 
-        # シリアライズされたデータをJSONレスポンスとして返します
-        return Response(serializer.data)
+from rest_framework.viewsets import ModelViewSet
+from .models import MyModel
+from .serializer import MyModelSerializer
+
+
+class MyModelViewSet(ModelViewSet):
+    queryset = MyModel.objects.all()
+    serializer_class = MyModelSerializer
