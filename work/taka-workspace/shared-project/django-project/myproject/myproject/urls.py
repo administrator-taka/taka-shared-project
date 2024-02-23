@@ -16,11 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url, include
-from myapp.urls import router as blog_router
+from myapp.views import TestAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # blog.urlsをincludeする
-    url(r'^api/', include(blog_router.urls)),
+    # url(r'^api/', include(blog_router.urls)),
+    path('test/', TestAPIView.as_view(), name='test-api'),
 ]
