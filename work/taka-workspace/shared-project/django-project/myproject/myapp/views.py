@@ -11,10 +11,10 @@ def my_view(request):
 
 
 from rest_framework.viewsets import ModelViewSet
-from .models import MyModel
-from .serializer import MyModelSerializer
+from .models import Test
+from .serializer import TestSerializer
 
 
-class MyModelViewSet(ModelViewSet):
-    queryset = MyModel.objects.all()
-    serializer_class = MyModelSerializer
+class TestViewSet(ModelViewSet):
+    queryset = Test.objects.all()
+    serializer_class = TestSerializer

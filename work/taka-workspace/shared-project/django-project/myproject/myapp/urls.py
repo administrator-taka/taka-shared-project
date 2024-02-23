@@ -1,13 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import MyModelViewSet
+from .views import TestViewSet
 
 # デフォルトのルーターを作成
 router = DefaultRouter()
 
-# MyModelViewSetをルーターに登録
-router.register(r'models', MyModelViewSet)
+# TestViewSetをルーターに登録
+router.register(r'models', TestViewSet)
 
 # APIのルートURLを設定
 urlpatterns = [
