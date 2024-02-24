@@ -7,9 +7,9 @@ from .views import TestViewSet
 router = DefaultRouter()
 
 # TestViewSetをルーターに登録
-router.register(r'models', TestViewSet)
+router.register(r'test', TestViewSet)
 
 # APIのルートURLを設定
 urlpatterns = [
-    path('', include(router.urls)),
+    path('/', include(router.urls)),
 ]
