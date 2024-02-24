@@ -17,7 +17,7 @@ export default {
   async testDjangoApi(params: testRequest): Promise<testResponse> {
     console.log(params)
     return await djangoApiClient
-      .post("", null, {
+      .post("/", null, {
         headers: { "Content-Type": "application/json" },
       })
       .then((res: AxiosResponse<testResponse>) => {

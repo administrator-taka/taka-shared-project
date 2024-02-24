@@ -11,5 +11,5 @@ router.register(r'test', TestViewSet)
 
 # APIのルートURLを設定
 urlpatterns = [
-    path('/', include(router.urls)),
+    path('', include(router.urls)),  # 空の文字列にルーターのURLを含めます
 ]

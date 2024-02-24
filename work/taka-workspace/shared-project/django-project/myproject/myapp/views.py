@@ -3,8 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
+# APIビューを定義
 @api_view(['POST'])
 def my_view(request):
+    # POSTリクエストのデータを取得
     data = request.data
     print(data)
 
@@ -21,15 +23,18 @@ def my_view(request):
     serializer = TestSerializer(tests, many=True)
     print(serializer.data)
 
+    # シリアライズされたデータをレスポンスとして返す
     return Response(serializer.data)
 
 
-# ここから下は保留
 from rest_framework.viewsets import ModelViewSet
 from .models import Test
 from .serializer import TestSerializer
 
 
+# モデルビューセットを定義
 class TestViewSet(ModelViewSet):
+    # 全てのTestモデルのクエリセットを取得
     queryset = Test.objects.all()
+    # Testモデル用のシリアライザクラスを指定
     serializer_class = TestSerializer
