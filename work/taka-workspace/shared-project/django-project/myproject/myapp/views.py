@@ -23,6 +23,7 @@ def my_view(request):
 
     return Response(serializer.data)
 
+
 # ここから下は保留
 from rest_framework.viewsets import ModelViewSet
 from .models import Test
