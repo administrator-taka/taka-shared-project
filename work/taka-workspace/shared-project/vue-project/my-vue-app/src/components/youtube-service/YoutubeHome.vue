@@ -5,6 +5,7 @@
       <div>youtube home（仮）</div>
       <div>↓Java API疎通確認</div>
       <div>{{ result }}</div>
+      <div>{{ djangoResult }}</div>
       <button @click="testVuex">Trigger Vuex</button>
     </main>
   </div>
@@ -22,6 +23,7 @@ export default {
   },
   setup() {
     const result = ref();
+    const djangoResult = ref();
     const store = useStore();
 
     const test = async () => {
@@ -38,6 +40,20 @@ export default {
         });
     };
 
+    const testDjango = async () => {
+      testRepository
+        .testDjangoApi({ test: "test_name_a" })
+        .then((res) => {
+          console.log("★★★DjangoApi疎通確認★★★");
+          console.log(res);
+          djangoResult.value = res;
+        })
+        .catch((error) => {
+          console.log("★★★Djangoエラー動作確認★★★");
+          console.log(error);
+        });
+    };
+
     const testVuex = async () => {
       await store.dispatch("test/setUserDataAction", {
         username: "example",
@@ -49,9 +65,10 @@ export default {
 
     onMounted(() => {
       test();
+      testDjango();
     });
 
-    return { result, testVuex };
+    return { result, djangoResult, testVuex };
   },
 };
 </script>

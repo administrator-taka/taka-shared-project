@@ -1,5 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 const apiUrl = process.env.API_DOMAIN;
+const djangoApiUrl = process.env.DJANGO_API_DOMAIN;
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -15,6 +16,13 @@ module.exports = defineConfig({
     proxy: {
       "/api": {
         target: apiUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "",
+        },
+      },
+      "/django-api": {
+        target: djangoApiUrl,
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
