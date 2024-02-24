@@ -21,5 +21,5 @@ from myapp.views import my_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('django-api', my_view, name='my-view'),
+    path('api', my_view, name='my-view'),
 ]

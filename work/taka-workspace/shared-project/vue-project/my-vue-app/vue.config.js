@@ -25,7 +25,7 @@ module.exports = defineConfig({
         target: djangoApiUrl,
         changeOrigin: true,
         pathRewrite: {
-          "^/api": "",
+          "^/django-api": "/api",
         },
       },
     },
