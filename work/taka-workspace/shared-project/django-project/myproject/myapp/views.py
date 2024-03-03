@@ -35,7 +35,7 @@ def my_view(request):
     try:
         # トランザクションを開始
         with transaction.atomic():
-            insert_playlist("UUIdEIHpS0TdkqRkHL5OkLtA")
+            insert_playlist("PL-f9rLhac0DErB5rSnM0iKvNqkLP8B22h")
     except Exception as e:
         # エラーが発生した場合は、ロールバックされる
         # エラーの詳細をログに記録することもできる
@@ -82,21 +82,14 @@ def insert_playlist(playlist_id):
             processed_videos += 1
         else:
             print("Failed to serialize video data:", serializer.errors)
-        insert_video(video_id)
+        insert_video(video_id, item)
 
 
-def insert_video(video_id):
-    # 動画の詳細情報を取得
-    video_data = get_youtube_video_details(video_id)
-    if "items" not in video_data or len(video_data["items"]) == 0:
-        print("Video not found.")
-        # ここで delete_flag を True に設定して挿入または更新する
-        video_detail = VideoDetail(video_id=video_id, delete_flag=True)
-        video_detail.save()
-        return
+def insert_video(video_id, item):
+    video_data = item
 
     # チャンネルのIDを取得
-    channel_id = video_data["items"][0]["snippet"].get("channelId")
+    channel_id = video_data["snippet"].get("channelId")
     if not channel_id:
         print("Channel ID not found.")
         return
@@ -105,36 +98,30 @@ def insert_video(video_id):
     try:
         channel_detail = ChannelDetail.objects.get(channel_id=channel_id)
     except ChannelDetail.DoesNotExist:
-        channel_data = get_youtube_channel_details(channel_id)
+        channel_data = get_youtube_channel_details(channel_id)["items"][0]
         insert_channel_detail(channel_data)
 
     try:
         video_detail = VideoDetail.objects.get(video_id=video_id)
-    except ChannelDetail.DoesNotExist:
-        insert_video_detail(video_data)
+    except VideoDetail.DoesNotExist:
+        insert_video_detail(video_id,video_data)
 
 
 def insert_channel_detail(channel_data):
     try:
-        snippet = channel_data["items"][0]["snippet"]
+        snippet = channel_data["snippet"]
     except (KeyError, IndexError):
         print("Channel data not found.")
         return
 
-    thumbnails = snippet.get("thumbnails", {})
-    thumbnails_json = {
-        "default": thumbnails.get("default", {}).get("url"),
-        "medium": thumbnails.get("medium", {}).get("url"),
-        "high": thumbnails.get("high", {}).get("url")
-    }
-
     channel_detail = ChannelDetail(
-        channel_id=channel_data["items"][0].get("id"),
+        channel_id=channel_data.get("id"),
         title=snippet.get("title"),
         description=snippet.get("description"),
+        custom_url=snippet.get("customUrl"),
         published_at=snippet.get("publishedAt"),
-        thumbnails=thumbnails_json,
-        default_audio_language=snippet.get("defaultAudioLanguage"),  # デフォルトの音声言語を取得
+        thumbnails=snippet.get("thumbnails"),
+        # thumbnails=thumbnails_json,
         country=snippet.get("country"),
         delete_flag=False
     )
@@ -142,35 +129,20 @@ def insert_channel_detail(channel_data):
     print("Channel detail inserted successfully.")
 
 
-def insert_video_detail(video_data):
+def insert_video_detail(video_id,video_data):
     try:
-        snippet = video_data["items"][0]["snippet"]
+        snippet = video_data["snippet"]
     except (KeyError, IndexError):
         print("Video data not found.")
         return
 
-    thumbnails = snippet.get("thumbnails", {})
-    thumbnails_json = {
-        "default": thumbnails.get("default", {}).get("url"),
-        "medium": thumbnails.get("medium", {}).get("url"),
-        "high": thumbnails.get("high", {}).get("url")
-    }
-
-    try:
-        live_streaming_details = video_data["items"][0]["liveStreamingDetails"]
-    except (KeyError, IndexError):
-        live_streaming_details = None  # live_streaming_detailsが存在しない場合はNoneを使用する
-
     video_detail = VideoDetail(
-        video_id=video_data["items"][0].get("id"),
-        published_at=snippet.get("publishedAt"),
-        channel_id=snippet.get("channelId"),
+        video_id=video_id,
         title=snippet.get("title"),
-        thumbnails=thumbnails_json,
-        default_audio_language=snippet.get("defaultAudioLanguage"),
-        actual_start_time=live_streaming_details.get("actualStartTime") if live_streaming_details else None,
-        actual_end_time=live_streaming_details.get("actualEndTime") if live_streaming_details else None,
-        scheduled_start_time=live_streaming_details.get("scheduledStartTime") if live_streaming_details else None,
+        description=snippet.get("description"),
+        thumbnails=snippet.get("thumbnails"),
+        video_owner_channel_title=snippet.get("videoOwnerChannelTitle"),
+        video_owner_channel_id=snippet.get("videoOwnerChannelId"),
         delete_flag=False
     )
     video_detail.save()

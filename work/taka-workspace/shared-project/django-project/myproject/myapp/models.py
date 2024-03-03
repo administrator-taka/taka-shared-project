@@ -138,38 +138,36 @@ class ChannelDetail(models.Model):
     channel_id = models.CharField(primary_key=True, max_length=100)  # チャンネルID
     title = models.CharField(max_length=100, null=True)  # チャンネルのタイトル
     description = models.TextField(null=True)  # チャンネルの説明
+    custom_url = models.CharField(max_length=100, null=True)  # カスタムURL
     published_at = models.DateTimeField(null=True)  # チャンネルの作成日時
     thumbnails = models.JSONField(null=True)  # サムネイル画像のURLをJSON形式で保存
-    default_audio_language = models.CharField(max_length=10, null=True)  # デフォルトの音声言語
     country = models.CharField(max_length=2, null=True)  # チャンネルが所在する国のISO 3166-1 国コード
     delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
 
     class Meta:
-        db_table = 'channel_detail'  # 正しいテーブル名を指定する
+        db_table = 'channel_detail'  # テーブル名の指定
 
 
 class VideoDetail(models.Model):
     video_id = models.CharField(primary_key=True, max_length=100)  # video_id は文字列として最大100文字
-    published_at = models.DateTimeField(null=True)  # 動画の公開日時
-    channel = models.ForeignKey(ChannelDetail, on_delete=models.CASCADE, null=True)  # チャンネル詳細への外部キー
-    title = models.CharField(max_length=200, null=True)  # 動画タイトル
+    title = models.CharField(max_length=200, null=True)  # 動画のタイトル
+    description = models.TextField(null=True)  # 動画の説明
     thumbnails = models.JSONField(null=True)  # サムネイル画像のURLをJSON形式で保存
-    default_audio_language = models.CharField(max_length=10, null=True)  # デフォルトの音声言語
-    actual_start_time = models.DateTimeField(null=True)  # 実際の開始日時
-    actual_end_time = models.DateTimeField(null=True)  # 実際の終了日時
-    scheduled_start_time = models.DateTimeField(null=True)  # 予定の開始日時
+    video_owner_channel_title = models.CharField(max_length=200, null=True)  # チャンネルのタイトル
+    video_owner_channel_id = models.CharField(max_length=100, null=True)  # チャンネルID
     delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
 
     class Meta:
-        db_table = 'video_detail'  # 正しいテーブル名を指定する
+        db_table = 'video_detail'  # テーブル名の指定
+
 
 class PlaylistDetail(models.Model):
     playlist_id = models.CharField(max_length=100)  # プレイリストID
     video_id = models.CharField(max_length=100)  # 動画ID
     playlist_video_id = models.CharField(max_length=100)  # プレイリスト内の動画ID
-    published_at = models.DateTimeField(null=True)  # 動画の公開日時
+    published_at = models.DateTimeField(null=True)  # 動画の登録日時
     delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
 
     class Meta:
-        db_table = 'playlist_detail'  # 正しいテーブル名を指定する
+        db_table = 'playlist_detail'  # テーブル名の指定
         unique_together = [['playlist_id', 'playlist_video_id']]  # 重複を許さない組み合わせを指定
