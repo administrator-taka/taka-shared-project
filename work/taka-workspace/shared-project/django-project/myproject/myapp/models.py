@@ -130,3 +130,20 @@ class Test(models.Model):
     class Meta:
         managed = False
         db_table = 'test'
+
+
+class VideoDetail(models.Model):
+    video_id = models.CharField(primary_key=True, max_length=100)  # video_id は文字列として最大100文字
+    published_at = models.DateTimeField()  # 動画の公開日時
+    channel_id = models.CharField(max_length=100)  # チャンネルID
+    title = models.CharField(max_length=200)  # 動画タイトル
+    thumbnails = models.CharField(max_length=200)  # サムネイル画像のURL
+    channel_title = models.CharField(max_length=100)  # チャンネルのタイトル
+    default_audio_language = models.CharField(max_length=10)  # デフォルトの音声言語
+    actual_start_time = models.DateTimeField()  # 実際の開始日時
+    actual_end_time = models.DateTimeField()  # 実際の終了日時
+    scheduled_start_time = models.DateTimeField()  # 予定の開始日時
+    delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
+
+    class Meta:
+        db_table = 'video_detail'  # 正しいテーブル名を指定する
