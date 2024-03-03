@@ -32,12 +32,10 @@ def my_view(request):
     serializer = TestSerializer(tests, many=True)
     print(serializer.data)
 
-    video_id = 'KjymxCpOZD8'
     try:
         # トランザクションを開始
         with transaction.atomic():
             insert_playlist("UUIdEIHpS0TdkqRkHL5OkLtA")
-            insert_video(video_id)
     except Exception as e:
         # エラーが発生した場合は、ロールバックされる
         # エラーの詳細をログに記録することもできる
@@ -57,7 +55,6 @@ def insert_playlist(playlist_id):
 
     # プレイリスト内の各ビデオのIDを出力
     items = response_data
-    total_videos = len(items)
     processed_videos = 0
 
     # tqdm を使用して処理の進行状況を表示
@@ -85,7 +82,6 @@ def insert_playlist(playlist_id):
             processed_videos += 1
         else:
             print("Failed to serialize video data:", serializer.errors)
-        time.sleep(0.3)
         insert_video(video_id)
 
 
@@ -112,7 +108,10 @@ def insert_video(video_id):
         channel_data = get_youtube_channel_details(channel_id)
         insert_channel_detail(channel_data)
 
-    insert_video_detail(video_data)
+    try:
+        video_detail = VideoDetail.objects.get(video_id=video_id)
+    except ChannelDetail.DoesNotExist:
+        insert_video_detail(video_data)
 
 
 def insert_channel_detail(channel_data):

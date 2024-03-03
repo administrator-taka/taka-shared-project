@@ -1,3 +1,5 @@
+import time
+
 import requests
 from myproject.settings.base import YOUTUBE_API_KEY
 
@@ -74,12 +76,14 @@ def get_playlist_videos_page(playlist_id, page_token=None):
 
 
 def make_api_request(api_url, params):
+    time.sleep(0.3)
     try:
         # GETリクエストを送信してレスポンスを取得
         response = requests.get(api_url, params=params)
 
         # レスポンスのステータスコードを確認
         if response.status_code == 200:
+            print(response.json())
             # JSON形式のレスポンスを解析して返す
             return response.json()
         else:
