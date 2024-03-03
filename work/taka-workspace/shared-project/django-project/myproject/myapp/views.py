@@ -1,4 +1,4 @@
-import json
+import time
 
 from django.db import transaction
 from django.http import HttpResponseServerError
@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from myproject.settings.base import YOUTUBE_API_KEY
-from .logic.database import insert_video_detail
 from .logic.youtube_data_api import get_youtube_video_details, get_youtube_channel_details, get_all_playlist_videos
 
 
@@ -50,15 +49,28 @@ def my_view(request):
     return Response(serializer.data)
 
 
+from tqdm import tqdm
+
+
 def insert_playlist(playlist_id):
     response_data = get_all_playlist_videos(playlist_id)
 
     # プレイリスト内の各ビデオのIDを出力
     items = response_data
-    for item in items:
+    total_videos = len(items)
+    processed_videos = 0
+
+    # tqdm を使用して処理の進行状況を表示
+    for item in tqdm(items, desc="Inserting videos", unit="video"):
         playlist_video_id = item.get("id")
         published_at = item.get("snippet").get("publishedAt")
         video_id = item.get("snippet").get("resourceId").get("videoId")
+
+        # DBに既に同じセットが存在するかをチェック
+        if PlaylistDetail.objects.filter(playlist_id=playlist_id, video_id=video_id).exists():
+            print(f"Playlist detail for video {video_id} already exists. Skipping insertion.")
+            continue
+
         # ビデオデータをシリアライズしてデータベースに挿入
         video_data = {
             "playlist_id": playlist_id,
@@ -70,18 +82,21 @@ def insert_playlist(playlist_id):
         serializer = PlaylistDetailSerializer(data=video_data)
         if serializer.is_valid():
             serializer.save()
+            processed_videos += 1
         else:
             print("Failed to serialize video data:", serializer.errors)
+        time.sleep(0.3)
+        insert_video(video_id)
+
 
 def insert_video(video_id):
     # 動画の詳細情報を取得
     video_data = get_youtube_video_details(video_id)
     if "items" not in video_data or len(video_data["items"]) == 0:
         print("Video not found.")
-        return
-
-    if "items" not in video_data or len(video_data["items"]) == 0:
-        print("Video not found.")
+        # ここで delete_flag を True に設定して挿入または更新する
+        video_detail = VideoDetail(video_id=video_id, delete_flag=True)
+        video_detail.save()
         return
 
     # チャンネルのIDを取得
@@ -164,8 +179,8 @@ def insert_video_detail(video_data):
 
 
 from rest_framework.viewsets import ModelViewSet
-from .models import Test, ChannelDetail, VideoDetail
-from .serializer import TestSerializer, VideoDetailSerializer, ChannelDetailSerializer, PlaylistDetailSerializer
+from .models import Test, ChannelDetail, VideoDetail, PlaylistDetail
+from .serializer import TestSerializer, PlaylistDetailSerializer
 
 
 # モデルビューセットを定義
