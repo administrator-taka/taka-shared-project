@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from myproject.settings.base import YOUTUBE_API_KEY
 from .logic.database import insert_video_detail
-from .logic.youtube_data_api import get_youtube_video_details, get_youtube_channel_details
+from .logic.youtube_data_api import get_youtube_video_details, get_youtube_channel_details, get_all_playlist_videos
 
 
 # APIビューを定義
@@ -33,10 +33,11 @@ def my_view(request):
     serializer = TestSerializer(tests, many=True)
     print(serializer.data)
 
-    video_id='BWQaudsUuNk'
+    video_id='KjymxCpOZD8'
     try:
         # トランザクションを開始
         with transaction.atomic():
+            insert_playlist("UUIdEIHpS0TdkqRkHL5OkLtA")
             insert_video(video_id)
     except Exception as e:
         # エラーが発生した場合は、ロールバックされる
@@ -47,6 +48,16 @@ def my_view(request):
 
     # シリアライズされたデータをレスポンスとして返す
     return Response(serializer.data)
+
+def insert_playlist(playlist_id):
+    response_data = get_all_playlist_videos(playlist_id)
+
+    # プレイリスト内の各ビデオのIDを出力
+    items = response_data
+    for item in items:
+        playlist_video_id = item.get("id")
+        published_at=item.get("snippet").get("publishedAt")
+        video_id=item.get("snippet").get("resourceId").get("videoId")
 
 def insert_video(video_id):
     # 動画の詳細情報を取得
