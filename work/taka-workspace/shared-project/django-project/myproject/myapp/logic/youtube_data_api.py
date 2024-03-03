@@ -9,7 +9,7 @@ def get_youtube_video_details(video_id):
     params = {
         'id': video_id,
         'key': YOUTUBE_API_KEY,
-        'part': 'snippet'
+        'part': 'snippet,liveStreamingDetails'
     }
 
     # YouTube Data API を呼び出してレスポンスを取得
