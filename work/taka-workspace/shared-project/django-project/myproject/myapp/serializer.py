@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Test
+from .models import Test, PlaylistDetail
 
 
 class TestSerializer(serializers.ModelSerializer):
@@ -8,18 +8,28 @@ class TestSerializer(serializers.ModelSerializer):
         model = Test  # このシリアライザがTestモデルを使用することを指定します
         fields = '__all__'  # Testモデルのすべてのフィールドを含めることを指定します
 
+
 from rest_framework import serializers
 from .models import VideoDetail
+
 
 class VideoDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoDetail
         fields = '__all__'
 
+
 from rest_framework import serializers
 from .models import ChannelDetail
+
 
 class ChannelDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChannelDetail
+        fields = '__all__'
+
+
+class PlaylistDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlaylistDetail
         fields = '__all__'

@@ -33,7 +33,7 @@ def my_view(request):
     serializer = TestSerializer(tests, many=True)
     print(serializer.data)
 
-    video_id='KjymxCpOZD8'
+    video_id = 'KjymxCpOZD8'
     try:
         # トランザクションを開始
         with transaction.atomic():
@@ -49,6 +49,7 @@ def my_view(request):
     # シリアライズされたデータをレスポンスとして返す
     return Response(serializer.data)
 
+
 def insert_playlist(playlist_id):
     response_data = get_all_playlist_videos(playlist_id)
 
@@ -56,8 +57,21 @@ def insert_playlist(playlist_id):
     items = response_data
     for item in items:
         playlist_video_id = item.get("id")
-        published_at=item.get("snippet").get("publishedAt")
-        video_id=item.get("snippet").get("resourceId").get("videoId")
+        published_at = item.get("snippet").get("publishedAt")
+        video_id = item.get("snippet").get("resourceId").get("videoId")
+        # ビデオデータをシリアライズしてデータベースに挿入
+        video_data = {
+            "playlist_id": playlist_id,
+            "video_id": video_id,
+            "playlist_video_id": playlist_video_id,
+            "published_at": published_at,
+            "delete_flag": False  # デフォルト値を設定
+        }
+        serializer = PlaylistDetailSerializer(data=video_data)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print("Failed to serialize video data:", serializer.errors)
 
 def insert_video(video_id):
     # 動画の詳細情報を取得
@@ -151,7 +165,7 @@ def insert_video_detail(video_data):
 
 from rest_framework.viewsets import ModelViewSet
 from .models import Test, ChannelDetail, VideoDetail
-from .serializer import TestSerializer, VideoDetailSerializer, ChannelDetailSerializer
+from .serializer import TestSerializer, VideoDetailSerializer, ChannelDetailSerializer, PlaylistDetailSerializer
 
 
 # モデルビューセットを定義

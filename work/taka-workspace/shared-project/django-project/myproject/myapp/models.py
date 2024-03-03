@@ -162,3 +162,14 @@ class VideoDetail(models.Model):
 
     class Meta:
         db_table = 'video_detail'  # 正しいテーブル名を指定する
+
+class PlaylistDetail(models.Model):
+    playlist_id = models.CharField(max_length=100)  # プレイリストID
+    video_id = models.CharField(max_length=100)  # 動画ID
+    playlist_video_id = models.CharField(max_length=100)  # プレイリスト内の動画ID
+    published_at = models.DateTimeField(null=True)  # 動画の公開日時
+    delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
+
+    class Meta:
+        db_table = 'playlist_detail'  # 正しいテーブル名を指定する
+        unique_together = [['playlist_id', 'playlist_video_id']]  # 重複を許さない組み合わせを指定
