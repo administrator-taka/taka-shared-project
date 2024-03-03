@@ -2,12 +2,15 @@ from django.utils.crypto import get_random_string
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .logic.Database import insert_video_detail
+from myproject.settings.base import YOUTUBE_API_KEY
+from .logic.database import insert_video_detail
 
 
 # APIビューを定義
 @api_view(['POST'])
 def my_view(request):
+    print("テスト出力")
+    print(YOUTUBE_API_KEY)
     # POSTリクエストのデータを取得
     data = request.data
     print(data)
