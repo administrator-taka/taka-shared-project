@@ -132,17 +132,32 @@ class Test(models.Model):
         db_table = 'test'
 
 
+from django.db import models
+
+class ChannelDetail(models.Model):
+    channel_id = models.CharField(primary_key=True, max_length=100)  # チャンネルID
+    title = models.CharField(max_length=100, null=True)  # チャンネルのタイトル
+    description = models.TextField(null=True)  # チャンネルの説明
+    published_at = models.DateTimeField(null=True)  # チャンネルの作成日時
+    thumbnails = models.JSONField(null=True)  # サムネイル画像のURLをJSON形式で保存
+    default_audio_language = models.CharField(max_length=10, null=True)  # デフォルトの音声言語
+    country = models.CharField(max_length=2, null=True)  # チャンネルが所在する国のISO 3166-1 国コード
+    delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
+
+    class Meta:
+        db_table = 'channel_detail'  # 正しいテーブル名を指定する
+
+
 class VideoDetail(models.Model):
     video_id = models.CharField(primary_key=True, max_length=100)  # video_id は文字列として最大100文字
-    published_at = models.DateTimeField()  # 動画の公開日時
-    channel_id = models.CharField(max_length=100)  # チャンネルID
-    title = models.CharField(max_length=200)  # 動画タイトル
-    thumbnails = models.CharField(max_length=200)  # サムネイル画像のURL
-    channel_title = models.CharField(max_length=100)  # チャンネルのタイトル
-    default_audio_language = models.CharField(max_length=10)  # デフォルトの音声言語
-    actual_start_time = models.DateTimeField()  # 実際の開始日時
-    actual_end_time = models.DateTimeField()  # 実際の終了日時
-    scheduled_start_time = models.DateTimeField()  # 予定の開始日時
+    published_at = models.DateTimeField(null=True)  # 動画の公開日時
+    channel = models.ForeignKey(ChannelDetail, on_delete=models.CASCADE, null=True)  # チャンネル詳細への外部キー
+    title = models.CharField(max_length=200, null=True)  # 動画タイトル
+    thumbnails = models.JSONField(null=True)  # サムネイル画像のURLをJSON形式で保存
+    default_audio_language = models.CharField(max_length=10, null=True)  # デフォルトの音声言語
+    actual_start_time = models.DateTimeField(null=True)  # 実際の開始日時
+    actual_end_time = models.DateTimeField(null=True)  # 実際の終了日時
+    scheduled_start_time = models.DateTimeField(null=True)  # 予定の開始日時
     delete_flag = models.BooleanField(default=False)  # レコード削除フラグ、デフォルトは False
 
     class Meta:

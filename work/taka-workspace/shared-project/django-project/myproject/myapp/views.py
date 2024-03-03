@@ -1,9 +1,14 @@
+import json
+
+from django.db import transaction
+from django.http import HttpResponseServerError
 from django.utils.crypto import get_random_string
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from myproject.settings.base import YOUTUBE_API_KEY
 from .logic.database import insert_video_detail
+from .logic.youtube_data_api import get_youtube_video_details, get_youtube_channel_details
 
 
 # APIビューを定義
@@ -28,29 +33,114 @@ def my_view(request):
     serializer = TestSerializer(tests, many=True)
     print(serializer.data)
 
-    # VideoDetail モデルにデータをインサート
-    video_detail_data = {
-        'video_id': 'your_fixed_video_id',
-        'published_at': '2024-03-03T12:00:00Z',  # 例として固定の日時を使用
-        'channel_id': 'your_fixed_channel_id',
-        'title': 'Your Fixed Title',
-        'thumbnails': 'https://example.com/default_thumbnail.jpg',
-        'channel_title': 'Your Fixed Channel Title',
-        'default_audio_language': 'en',
-        'actual_start_time': '2024-03-03T12:00:00Z',  # 例として固定の日時を使用
-        'actual_end_time': '2024-03-03T13:00:00Z',  # 例として固定の日時を使用
-        'scheduled_start_time': '2024-03-03T12:00:00Z',  # 例として固定の日時を使用
-        'delete_flag': False
-    }
-    insert_video_detail(video_detail_data)
+    video_id='BWQaudsUuNk'
+    try:
+        # トランザクションを開始
+        with transaction.atomic():
+            insert_video(video_id)
+    except Exception as e:
+        # エラーが発生した場合は、ロールバックされる
+        # エラーの詳細をログに記録することもできる
+        print("An error occurred:", str(e))
+        # エラーをクライアントに返す場合は、適切なHTTPレスポンスを返す
+        return HttpResponseServerError("An error occurred while processing the request")
 
     # シリアライズされたデータをレスポンスとして返す
     return Response(serializer.data)
 
+def insert_video(video_id):
+    # 動画の詳細情報を取得
+    video_data = get_youtube_video_details(video_id)
+    if "items" not in video_data or len(video_data["items"]) == 0:
+        print("Video not found.")
+        return
+
+    if "items" not in video_data or len(video_data["items"]) == 0:
+        print("Video not found.")
+        return
+
+    # チャンネルのIDを取得
+    channel_id = video_data["items"][0]["snippet"].get("channelId")
+    if not channel_id:
+        print("Channel ID not found.")
+        return
+
+    # チャンネルの詳細情報をチェックし、存在しない場合は挿入
+    try:
+        channel_detail = ChannelDetail.objects.get(channel_id=channel_id)
+    except ChannelDetail.DoesNotExist:
+        channel_data = get_youtube_channel_details(channel_id)
+        insert_channel_detail(channel_data)
+
+    insert_video_detail(video_data)
+
+
+def insert_channel_detail(channel_data):
+    try:
+        snippet = channel_data["items"][0]["snippet"]
+    except (KeyError, IndexError):
+        print("Channel data not found.")
+        return
+
+    thumbnails = snippet.get("thumbnails", {})
+    thumbnails_json = {
+        "default": thumbnails.get("default", {}).get("url"),
+        "medium": thumbnails.get("medium", {}).get("url"),
+        "high": thumbnails.get("high", {}).get("url")
+    }
+
+    channel_detail = ChannelDetail(
+        channel_id=channel_data["items"][0].get("id"),
+        title=snippet.get("title"),
+        description=snippet.get("description"),
+        published_at=snippet.get("publishedAt"),
+        thumbnails=thumbnails_json,
+        default_audio_language=snippet.get("defaultAudioLanguage"),  # デフォルトの音声言語を取得
+        country=snippet.get("country"),
+        delete_flag=False
+    )
+    channel_detail.save()
+    print("Channel detail inserted successfully.")
+
+
+def insert_video_detail(video_data):
+    try:
+        snippet = video_data["items"][0]["snippet"]
+    except (KeyError, IndexError):
+        print("Video data not found.")
+        return
+
+    thumbnails = snippet.get("thumbnails", {})
+    thumbnails_json = {
+        "default": thumbnails.get("default", {}).get("url"),
+        "medium": thumbnails.get("medium", {}).get("url"),
+        "high": thumbnails.get("high", {}).get("url")
+    }
+
+    try:
+        live_streaming_details = video_data["items"][0]["liveStreamingDetails"]
+    except (KeyError, IndexError):
+        live_streaming_details = None  # live_streaming_detailsが存在しない場合はNoneを使用する
+
+    video_detail = VideoDetail(
+        video_id=video_data["items"][0].get("id"),
+        published_at=snippet.get("publishedAt"),
+        channel_id=snippet.get("channelId"),
+        title=snippet.get("title"),
+        thumbnails=thumbnails_json,
+        default_audio_language=snippet.get("defaultAudioLanguage"),
+        actual_start_time=live_streaming_details.get("actualStartTime") if live_streaming_details else None,
+        actual_end_time=live_streaming_details.get("actualEndTime") if live_streaming_details else None,
+        scheduled_start_time=live_streaming_details.get("scheduledStartTime") if live_streaming_details else None,
+        delete_flag=False
+    )
+    video_detail.save()
+    print("Video detail inserted successfully.")
+
 
 from rest_framework.viewsets import ModelViewSet
-from .models import Test
-from .serializer import TestSerializer
+from .models import Test, ChannelDetail, VideoDetail
+from .serializer import TestSerializer, VideoDetailSerializer, ChannelDetailSerializer
 
 
 # モデルビューセットを定義
