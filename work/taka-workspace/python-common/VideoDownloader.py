@@ -14,6 +14,7 @@ class VideoDownloader:
             # FFMPEG_PATHが設定されている場合、ydl_optsを設定
             self.ydl_opts = {
                 'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+                # 'format': 'bestvideo[ext=m4v]+bestaudio[ext=m4a]/best[ext=m4v]/best',  # iPhoneでサポートされる形式に変更
                 'outtmpl': None,
                 'ffmpeg_location': ffmpeg_location,
             }
@@ -45,11 +46,11 @@ class VideoDownloader:
 
 # メインスクリプトのエントリーポイント
 if __name__ == "__main__":
-    video_id = "4rDOsvzTicY"
+    video_id = "aC1BIuA1FXw"
     output_path = "./"+video_id
 
     # VideoDownloaderクラスのインスタンスを作成
     downloader = VideoDownloader()
-    
+
     # 動画をダウンロードするメソッドを呼び出し
     downloader.download_video_mp4(video_id, output_path)
