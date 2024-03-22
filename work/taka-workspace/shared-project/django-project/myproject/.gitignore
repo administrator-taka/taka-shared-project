@@ -19,3 +19,5 @@ static/
 # その他の機密情報を含むファイル
 .env
 .idea
+
+test.json
