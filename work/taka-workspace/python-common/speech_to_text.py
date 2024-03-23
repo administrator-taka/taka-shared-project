@@ -21,7 +21,7 @@ def transcribe_mp3_to_text(mp3_file):
 
     return text
 
-# 使用例
-mp3_file = "001.mp3"
-result_text = transcribe_mp3_to_text(mp3_file)
-print("文字起こし結果:", result_text)
+# # 使用例
+# mp3_file = "001.mp3"
+# result_text = transcribe_mp3_to_text(mp3_file)
+# print("文字起こし結果:", result_text)
