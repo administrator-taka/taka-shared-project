@@ -4,10 +4,10 @@ import csv
 from speech_to_text import transcribe_mp3_to_text
 
 # 元のフォルダのパス
-folder_path = r"C:/Users/daiv3/Downloads/9784876153909w/9784876153909-2/見出し語のみ"
+folder_path =  "output"
 
 # CSVファイルのパス
-csv_file_path = "output.csv"
+csv_file_path = "topik_60.csv"
 
 # CSVファイルを書き込みモードで開く
 with open(csv_file_path, "w", newline="", encoding="utf-8") as csv_file:
@@ -15,7 +15,7 @@ with open(csv_file_path, "w", newline="", encoding="utf-8") as csv_file:
     csv_writer = csv.writer(csv_file)
 
     # ヘッダーを書き込む
-    csv_writer.writerow(["ファイル名", "テキスト結果"])
+    csv_writer.writerow(["fileName", "result"])
 
     # フォルダ内のすべてのファイルに対して処理を行う
     for filename in os.listdir(folder_path):
