@@ -4,3 +4,5 @@ python-dotenv
 yt-dlp
 hgtk
 six
+
+hangul_utils
